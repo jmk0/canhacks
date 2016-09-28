@@ -1,0 +1,36 @@
+Multiple tools are maintained in this repository.  Brief instructions
+here on how to use:
+
+sf_can_crap.ino
+
+Arduino sketch.  Copy to your sketch folder and upload it to your
+Arduino.
+
+Requires
+  1) the Arduino (tested on UNO)
+  2) a Sparkfun CAN-BUS Shield (DEV-13262)
+  3) a micro SD card inserted into the slot
+  4) the CAN BUS Arduino library: https://github.com/sparkfun/SparkFun_CAN-Bus_Arduino_Library
+
+On initialization, the OPEN LED (D7 on the shield) will slowly blink
+on error (e.g. no SD card).  While recording data to the SD card, that
+same LED will flicker.
+
+Data is recorded to the SD card using the filename "candata.bin".  The
+contents are fixed-size binary records of the tCAN structure format.
+See canhexdump.cpp for more.
+
+
+
+canhexdump
+g++ -o canhexdump canhexdump.cpp
+canhexdump <input file>
+e.g.
+canhexdump candata.bin
+
+Columns are:
+  1) message ID in hex.
+  2) "rtr" field of message header from MCP2515 (either 0 or -1).
+     No, I don't know what this is exactly yet.
+  3) Number of bytes in the CAN message.
+  4+ The bytes of the CAN message, in hex

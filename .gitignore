@@ -1,3 +1,10 @@
+# don't upload captured data files
+*.bin
+
+# emacs stuff
+*~
+#*
+
 # Compiled Object files
 *.slo
 *.lo
