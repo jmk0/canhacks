@@ -3,21 +3,9 @@
 #include <iomanip>
 #include <stdint.h>
 #include <string.h>
+#include "tcan.hpp"
 
 using namespace std;
-
-// make sure the compiler doesn't change the size of the structure
-// we're reading off disk.
-#pragma pack(push,1)
-typedef struct
-{
-   uint16_t id;
-   struct {
-      int8_t rtr : 1;
-      uint8_t length : 4;
-   } header;
-   uint8_t data[8];
-} tCAN;
 
 int main(int argc, char* argv[0])
 {
