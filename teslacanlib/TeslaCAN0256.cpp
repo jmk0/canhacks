@@ -1,5 +1,6 @@
 #include <math.h>
 #include <sstream>
+#include <iomanip>
 #include <limits>
 #include "TeslaCAN0256.hpp"
 
@@ -43,42 +44,82 @@ namespace canhacks
       s << boolalpha << fixed
         << "Drive inverter system state: " << driveInverterState << endl
         << "Vehicle hold state: " << vehHoldState << endl
-/*
-      switch ((msg.data[0] >> 2) & 0x03)
-      {
-         case 0:  s << "Unavailable"; break;
-         case 1:  s << "Standby";     break;
-         case 2:  s << "Blend In";    break;
-         case 3:  s << "Standstill";  break;
-         case 4:  s << "Blend Out";   break;
-         case 5:  s << "Park";        break;
-         case 6:  s << "Fault";       break;
-         case 7:  s << "Init";        break;
-      }
-      s << endl
-*/
         << "Drive inverter Proximity? " << driveInvProx << endl
         << "Inverter ready " << inverterReady << endl
         << "Regen " << regen << endl
         << "Cruise control " << cruiseCtlState << endl
-/*
-      switch ((msg.data[1] >> 4) & 0xff)
-      {
-         case 0:  s << "Off";         break;
-         case 1:  s << "Standby";     break;
-         case 2:  s << "Enabled";     break;
-         case 3:  s << "Standstill";  break;
-         case 4:  s << "Override";    break;
-         case 5:  s << "Fault";       break;
-         case 6:  s << "Pre-Fault";   break;
-         case 7:  s << "Pre-cancel";  break;
-      }
-      s << endl
-*/
+        << setprecision(1)
         << "Speed: " << speed << " MPH" << endl
         << "Cruise speed: " << cruiseSpeed << " MPH" << endl
         << "Count: " << count << endl
-        << "Display speed: " << dispSpeed << dispUnit << endl;
+        << "Display speed: " << dispSpeed << " " << dispUnit << endl;
       return s.str();
    }
+}
+
+
+std::ostream& operator<<(std::ostream& s,
+                         canhacks::TeslaCAN0256::InverterState iState)
+{
+   switch (iState)
+   {
+      case canhacks::TeslaCAN0256::isUnavailable: s << "Unavailable"; break;
+      case canhacks::TeslaCAN0256::isStandby:     s << "Standby";     break;
+      case canhacks::TeslaCAN0256::isFault:       s << "Fault";       break;
+      case canhacks::TeslaCAN0256::isAbort:       s << "Abort";       break;
+      case canhacks::TeslaCAN0256::isEnabled:     s << "Enabled";     break;
+      default:                                    s << "Invalid";     break;
+   }
+   return s;
+}
+
+
+std::ostream& operator<<(std::ostream& s,
+                         canhacks::TeslaCAN0256::HoldState hState)
+{
+   switch (hState)
+   {
+      case canhacks::TeslaCAN0256::hsUnavailable: s << "Unavailable"; break;
+      case canhacks::TeslaCAN0256::hsStandby:     s << "Standby";     break;
+      case canhacks::TeslaCAN0256::hsBlendIn:     s << "Blend In";    break;
+      case canhacks::TeslaCAN0256::hsStandstill:  s << "Standstill";  break;
+      case canhacks::TeslaCAN0256::hsBlendOut:    s << "Blend Out";   break;
+      case canhacks::TeslaCAN0256::hsPark:        s << "Park";        break;
+      case canhacks::TeslaCAN0256::hsFault:       s << "Fault";       break;
+      case canhacks::TeslaCAN0256::hsInit:        s << "Init";        break;
+      default:                                    s << "Invalid";     break;
+   }
+   return s;
+}
+
+
+std::ostream& operator<<(std::ostream& s,
+                         canhacks::TeslaCAN0256::CruiseState cState)
+{
+   switch (cState)
+   {
+      case canhacks::TeslaCAN0256::csOff:        s << "Off";         break;
+      case canhacks::TeslaCAN0256::csStandby:    s << "Standby";     break;
+      case canhacks::TeslaCAN0256::csEnabled:    s << "Enabled";     break;
+      case canhacks::TeslaCAN0256::csStandstill: s << "Standstill";  break;
+      case canhacks::TeslaCAN0256::csOverride:   s << "Override";    break;
+      case canhacks::TeslaCAN0256::csFault:      s << "Fault";       break;
+      case canhacks::TeslaCAN0256::csPreFault:   s << "Pre-Fault";   break;
+      case canhacks::TeslaCAN0256::csPreCancel:  s << "Pre-cancel";  break;
+      default:                                   s << "Invalid";     break;
+   }
+   return s;
+}
+
+
+std::ostream& operator<<(std::ostream& s,
+                         canhacks::TeslaCAN0256::SpeedUnit unit)
+{
+   switch (unit)
+   {
+      case canhacks::TeslaCAN0256::dsMPH: s << "MPH"; break;
+      case canhacks::TeslaCAN0256::dsKPH: s << "KPH"; break;
+      default:                            s << "Invalid"; break;
+   }
+   return s;
 }

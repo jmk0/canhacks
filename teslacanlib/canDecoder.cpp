@@ -1,5 +1,6 @@
 #include "canDecoder.hpp"
 #include "TeslaCAN0102.hpp"
+#include "TeslaCAN0256.hpp"
 
 namespace canhacks
 {
@@ -8,8 +9,8 @@ namespace canhacks
       CANMessage *rv;
       switch (msg.id)
       {
-         case 0x0102: rv = new TeslaCAN0102(cfg); return rv;
-         case 0x0256:
+         case 0x0102: rv = new TeslaCAN0102(cfg); rv->decode(msg); return rv;
+         case 0x0256: rv = new TeslaCAN0256();    rv->decode(msg); return rv;
          case 0x0106:
          case 0x0116:
          case 0x0145:

@@ -17,10 +17,10 @@ namespace canhacks
       TeslaCAN0102(MotorConfig cfg);
          /** Turn the binary CAN message into the message's engineering data.
           * @param[in] msg The binary CAN message to decode. */
-      void decode(tCAN& msg);
+      virtual void decode(tCAN& msg);
          /** Return a string containing a human-readable
           * representation of the message. */
-      std::string dump();
+      virtual std::string dump();
 
       double batteryPackVoltage; ///< In volts, naturally.
       double batteryPackCurrent; ///< In amps.

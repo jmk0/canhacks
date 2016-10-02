@@ -9,7 +9,7 @@ using namespace std;
 
 int main(int argc, char* argv[0])
 {
-   tCAN msg;
+   canhacks::tCAN msg;
       /* This was to verify the consistency of the data structure between
        * Arduino and the x86 g++ compiler.
        printf("&msg=%x size=%d offset.id=%d offset_header=%d\n",

@@ -1,6 +1,7 @@
 #ifndef TESLACAN0256_HPP
 #define TESLACAN0256_HPP
 
+#include <iostream>
 #include <stdint.h>
 #include "CANMessage.hpp"
 #include "teslacan.hpp"
@@ -61,10 +62,10 @@ namespace canhacks
       TeslaCAN0256();
          /** Turn the binary CAN message into the message's engineering data.
           * @param[in] msg The binary CAN message to decode. */
-      void decode(tCAN& msg);
+      virtual void decode(tCAN& msg);
          /** Return a string containing a human-readable
           * representation of the message. */
-      std::string dump();
+      virtual std::string dump();
 
       bool driveInvProx;  ///< Drive inverter proximity?
       bool inverterReady;
@@ -80,19 +81,17 @@ namespace canhacks
    };
 }
 
+
 std::ostream& operator<<(std::ostream& s,
-                         canhacks::TeslaCAN0256::InverterState iState)
-{
-   switch (iState)
-   {
-      case canhacks::TeslaCAN0256::isUnavailable: s << "Unavailable"; break;
-      case canhacks::TeslaCAN0256::isStandby:     s << "Standby";     break;
-      case canhacks::TeslaCAN0256::isFault:       s << "Fault";       break;
-      case canhacks::TeslaCAN0256::isAbort:       s << "Abort";       break;
-      case canhacks::TeslaCAN0256::isEnabled:     s << "Enabled";     break;
-      default:                                    s << "Invalid";     break;
-   }
-   return s;
-}
+                         canhacks::TeslaCAN0256::InverterState iState);
+
+std::ostream& operator<<(std::ostream& s,
+                         canhacks::TeslaCAN0256::HoldState hState);
+
+std::ostream& operator<<(std::ostream& s,
+                         canhacks::TeslaCAN0256::CruiseState cState);
+
+std::ostream& operator<<(std::ostream& s,
+                         canhacks::TeslaCAN0256::SpeedUnit unit);
 
 #endif // TESLACAN0256_HPP
