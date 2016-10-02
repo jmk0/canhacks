@@ -3,7 +3,7 @@
 #include <iomanip>
 #include <stdint.h>
 #include <string.h>
-#include "tcan.hpp"
+#include "canDecoder.hpp"
 
 using namespace std;
 
@@ -11,27 +11,13 @@ using namespace std;
 
 /*
  * Big thanks to Jason Hughes for providing much of the information
- * used in decoding the Tesla CAN messages.
+ * used in decoding the Tesla CAN messages.  Also thanks to the others
+ * who contributed to the collection and interpretation of the
+ * information.
  */
 
-// 0 = single motor, -10000 = dual motor
-int16_t bpCurOfs = 0;
 
-template <typename T>
-double fixedDecode(uint8_t *startPtr, double scale, unsigned shift, T offset)
-{
-   T tmpValInt = *(T*)startPtr;
-   tmpValInt += offset;
-   if (shift)
-   {
-         // bit shift for sign extension or, for unsigned, crud removal
-      tmpValInt <<= shift;
-      tmpValInt >>= shift;
-   }
-   return tmpValInt * scale;
-}
-
-void processDefault(tCAN& msg)
+void processDefault(canhacks::tCAN& msg)
 {
    cout << setw(4) << hex << msg.id << dec
         << " " << setw(2) << (int)msg.header.rtr
@@ -45,25 +31,9 @@ void processDefault(tCAN& msg)
 }
 
 
-void processQuiet(tCAN& msg)
-{
-      // do nothing, used to hide message IDs until I Implement processing
-}
 
-
-void process0102(tCAN& msg)
-{
-   cout << "Battery pack: "
-        << fixedDecode<uint16_t>(&msg.data[0], .01, 0, 0) << "V "
-        << fixedDecode<int16_t>(&msg.data[2], .1, 1, bpCurOfs) << "A "
-        << fixedDecode<int16_t>(&msg.data[4], .1, 1, bpCurOfs) << "A ";
-   if (msg.header.length == 8)
-      cout << fixedDecode<int16_t>(&msg.data[6], .1, 1, 0) << "C";
-   cout << endl;
-}
-
-
-void process0256(tCAN& msg)
+/// Speed and cruise control status (rear drive unit status)
+void process0256(canhacks::tCAN& msg)
 {
    cout << "Drive inverter system state: ";
    switch (msg.data[0] & 0x03)
@@ -104,59 +74,52 @@ void process0256(tCAN& msg)
       case 7:  cout << "Pre-cancel";  break;
    }
    cout << endl
-        << "Speed: " << fixedDecode<uint16_t>(&msg.data[2], .1, 4, 0) << " MPH"
-        << endl;
+        << "Speed: " << canhacks::fixedDecode<uint16_t>(&msg.data[2], .1, 4, 0) << " MPH"
+        << endl
+        << "Cruise speed: " << canhacks::fixedDecode<int16_t>(&msg.data[4], .5, 7, 0)
+        << " MPH" << endl
+        << "Count: " << (msg.data[5] >> 4) << endl
+        << "Display speed: " << (unsigned) msg.data[6]
+        << (msg.data[3] & 0x80 ? " KPH" : " MPH") << endl;
 }
 
 
-void process(tCAN& msg)
+/// Rear drive unit info
+void process0106(canhacks::tCAN& msg)
 {
-   switch (msg.id)
+   cout << "Rear drive motor RPM: "
+        << canhacks::fixedDecode<int16_t>(&msg.data[4], 1, 0, 0) << endl
+        << "Pedal position: " << (msg.data[6] * .4) << endl;
+}
+
+
+/// Front drive unit info
+void process01d4(canhacks::tCAN& msg)
+{
+   
+}
+
+
+void process(canhacks::tCAN& msg)
+{
+   using namespace canhacks;
+      /// @todo make the motor config a cmd-line option
+   CANMessage *can = canDecoder(msg, mcSingleMotor);
+   if (can == NULL)
    {
-      case 0x0102: process0102(msg);    break;
-      case 0x0256: process0256(msg);    break;
-      case 0x0106:
-      case 0x01d4:
-      case 0x0154:
-      case 0x0266:
-      case 0x02e5:
-      case 0x0145:
-      case 0x0116:
-      case 0x0232:
-      case 0x0562:
-      case 0x03d2:
-      case 0x0302:
-      case 0x0382:
-      case 0x0210:
-         processQuiet(msg);   break;
-      default:     processDefault(msg); break;
+      processDefault(msg);
+   }
+   else
+   {
+      cout << can->dump() << endl;
+      delete can;
    }
 }
 
+
 int main(int argc, char* argv[0])
 {
-   tCAN msg;
-
-/*   msg.id = 0x0102;
-   msg.header.length = 8;
-   msg.data[0] = 0x66;
-   msg.data[1] = 0x97;
-   msg.data[2] = 0xf8;
-   msg.data[3] = 0xa6;
-//   msg.data[2] = 0x9f;
-//   msg.data[3] = 0x83;
-   msg.data[4] = 0xf2;
-   msg.data[5] = 0x4d;
-   msg.data[6] = 0x28;
-   msg.data[7] = 0x01;
-   process(msg); */
-/*
-   int16_t poo = 0x8394;
-   cerr << poo << " " << (poo * .1) << endl;
-   poo = 0x9483;
-   cerr << poo << " " << (poo * .1) << endl;
-*/
-//   return 0;
+   canhacks::tCAN msg;
 
    if (argc != 2)
    {

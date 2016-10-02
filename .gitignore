@@ -34,3 +34,8 @@
 *.exe
 *.out
 *.app
+
+# Makefiles (generated)
+CMakeCache.txt
+Makefile
+cmake_install.cmake
