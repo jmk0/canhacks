@@ -39,3 +39,10 @@
 CMakeCache.txt
 Makefile
 cmake_install.cmake
+
+# Directories
+CMakeFiles/
+bin/
+data/
+testbin/
+tmp/
