@@ -31,15 +31,6 @@ void processDefault(canhacks::tCAN& msg)
 }
 
 
-/// Rear drive unit info
-void process0106(canhacks::tCAN& msg)
-{
-   cout << "Rear drive motor RPM: "
-        << canhacks::fixedDecode<int16_t>(&msg.data[4], 1, 0, 0) << endl
-        << "Pedal position: " << (msg.data[6] * .4) << endl;
-}
-
-
 void process(canhacks::tCAN& msg)
 {
    using namespace canhacks;
