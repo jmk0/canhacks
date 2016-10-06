@@ -24,7 +24,8 @@ unsigned decodeTestDualMotor()
 
    canhacks::TeslaCAN0102 eng(canhacks::mcDualMotor);
    eng.decode(msg);
-   TEST_ASSERT(eng.batteryPackVoltage == 387.58);
+   TEST_ASSERT_FEQ(eng.batteryPackVoltage, 387.58);
+   return failCount;
 }
 
 unsigned decodeTestSingleMotor()
@@ -42,7 +43,8 @@ unsigned decodeTestSingleMotor()
 
    canhacks::TeslaCAN0102 eng(canhacks::mcSingleMotor);
    eng.decode(msg);
-   TEST_ASSERT(eng.batteryPackCurrent == 92.7);
+   TEST_ASSERT_FEQ(eng.batteryPackCurrent, 92.7);
+   return failCount;
 }
 
 int main()

@@ -22,6 +22,7 @@ unsigned decodeTest()
    canhacks::TeslaCAN0256 eng;
    eng.decode(msg);
       // need some stuff here...
+   return failCount;
 }
 
 int main()

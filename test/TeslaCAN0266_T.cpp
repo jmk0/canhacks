@@ -24,12 +24,13 @@ unsigned decodeTest()
 
    canhacks::TeslaCAN0266 eng;
    eng.decode(msg);
-   TEST_ASSERT(eng.inverter12V == 13.3);
-   TEST_ASSERT(eng.dissipation == 22125);
-   TEST_ASSERT(eng.mechPower == 207.5);
-   TEST_ASSERT(eng.statorCurrent == 830);
-   TEST_ASSERT(eng.regenPowerMax == 72);
-   TEST_ASSERT(eng.drivePowerMax == 349);
+   TEST_ASSERT_FEQ(eng.inverter12V, 13.3);
+   TEST_ASSERT_EQ(eng.dissipation, 22125);
+   TEST_ASSERT_FEQ(eng.mechPower, 207.5);
+   TEST_ASSERT_EQ(eng.statorCurrent, 830);
+   TEST_ASSERT_EQ(eng.regenPowerMax, 72);
+   TEST_ASSERT_EQ(eng.drivePowerMax, 349);
+   return failCount;
 }
 
 

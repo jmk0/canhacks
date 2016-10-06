@@ -24,8 +24,9 @@ unsigned decodeTest()
 
    canhacks::TeslaCAN0106 eng;
    eng.decode(msg);
-   TEST_ASSERT(eng.motorRPM == 5283);
-   TEST_ASSERT(eng.pedalPos == 5.6);
+   TEST_ASSERT_EQ(eng.motorRPM, 5283);
+   TEST_ASSERT_FEQ(eng.pedalPos, 5.6);
+   return failCount;
 }
 
 

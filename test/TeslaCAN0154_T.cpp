@@ -24,9 +24,10 @@ unsigned decodeTest()
 
    canhacks::TeslaCAN0154 eng;
    eng.decode(msg);
-   TEST_ASSERT(eng.torque == 627);
-   TEST_ASSERT(eng.pedalA == 100);
-   TEST_ASSERT(eng.pedalB == 100);
+   TEST_ASSERT_FEQ(eng.torque, 627);
+   TEST_ASSERT_FEQ(eng.pedalA, 100);
+   TEST_ASSERT_FEQ(eng.pedalB, 100);
+   return failCount;
 }
 
 
