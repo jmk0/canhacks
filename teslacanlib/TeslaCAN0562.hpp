@@ -8,7 +8,7 @@
 namespace canhacks
 {
       /** Tesla Model S CAN message ID 0x0562.
-       * Rear drive unit information.
+       * Battery odometer information.
        */
    class TeslaCAN0562 : public CANMessage
    {

@@ -8,7 +8,7 @@
 namespace canhacks
 {
       /** Tesla Model S CAN message ID 0x0154.
-       * Rear drive unit information.
+       * Rear drive unit measurement information.
        */
    class TeslaCAN0154 : public CANMessage
    {
