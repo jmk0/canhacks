@@ -29,8 +29,8 @@ namespace canhacks
    {
       std::ostringstream s;
       s << std::setprecision(2) << std::fixed
-        << "Rear drive motor torque: " << torque << " Nm ("
-        << (torque * 0.737562149277) << " ftlb)" << std::endl
+        << "Rear drive motor torque: " << torque << " N*m ("
+        << (torque * 0.737562149277) << " ft*lb)" << std::endl
         << "Pedal position A: " << pedalA << std::endl
         << "Pedal position B: " << pedalA << std::endl;
       return s.str();
