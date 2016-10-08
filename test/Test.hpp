@@ -42,7 +42,12 @@
    {                                                                    \
       std::ostringstream cond;                                          \
       cond << #A << " == " << A << " == " << B;                         \
-      if ((fabs(A-B)/fabs(A)) < TEST_TOLERANCE)                         \
+      if ((A == 0) && (fabs(A-B) < TEST_TOLERANCE))                     \
+      {                                                                 \
+         std::cerr << std::left << std::setw(75) << cond.str()          \
+                   << "PASS" << std::endl;                              \
+      }                                                                 \
+      else if ((fabs(A-B)/fabs(A)) < TEST_TOLERANCE)                    \
       {                                                                 \
          std::cerr << std::left << std::setw(75) << cond.str()          \
                    << "PASS" << std::endl;                              \
