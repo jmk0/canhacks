@@ -35,14 +35,14 @@ namespace canhacks
    {
       std::ostringstream s;
       s << std::fixed << std::setprecision(1)
-        << "Nominal pack full power: " << nomFullPackPower << "kW*h"
+        << "Nominal pack full power: " << nomFullPackPower << " kW*h"
         << std::endl
-        << "Nominal power remaining: " << nomPowerRem << "kW*h" << std::endl
-        << "Expected power remaining: " << expPowerRem << "kW*h" << std::endl
-        << "Ideal power remaining: " << idealPowerRem << "kW*h" << std::endl
-        << "Power to charge complete: " << powerToFullCharge << "kW*h"
+        << "Nominal power remaining: " << nomPowerRem << " kW*h" << std::endl
+        << "Expected power remaining: " << expPowerRem << " kW*h" << std::endl
+        << "Ideal power remaining: " << idealPowerRem << " kW*h" << std::endl
+        << "Power to charge complete: " << powerToFullCharge << " kW*h"
         << std::endl
-        << "Power buffer: " << powerBuffer << "kW*h" << std::endl;
+        << "Power buffer: " << powerBuffer << " kW*h" << std::endl;
       return s.str();
    }
 }
