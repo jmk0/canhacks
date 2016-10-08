@@ -4,9 +4,6 @@
 
 using namespace std;
 
-/* Yes, I know that doing a direct comparison of floating point values
- * is a bad idea.  I'll address that issue later. */
-
 unsigned decodeTest()
 {
    unsigned failCount = 0;
