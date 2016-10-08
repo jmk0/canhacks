@@ -30,6 +30,10 @@ add_executable(TeslaCAN0302_T TeslaCAN0302_T.cpp)
 target_link_libraries(TeslaCAN0302_T teslacan)
 set_target_properties(TeslaCAN0302_T PROPERTIES RUNTIME_OUTPUT_DIRECTORY ${CMAKE_SOURCE_DIR}/testbin)
 
+add_executable(TeslaCAN0382_T TeslaCAN0382_T.cpp)
+target_link_libraries(TeslaCAN0382_T teslacan)
+set_target_properties(TeslaCAN0382_T PROPERTIES RUNTIME_OUTPUT_DIRECTORY ${CMAKE_SOURCE_DIR}/testbin)
+
 add_executable(TeslaCAN03d2_T TeslaCAN03d2_T.cpp)
 target_link_libraries(TeslaCAN03d2_T teslacan)
 set_target_properties(TeslaCAN03d2_T PROPERTIES RUNTIME_OUTPUT_DIRECTORY ${CMAKE_SOURCE_DIR}/testbin)
