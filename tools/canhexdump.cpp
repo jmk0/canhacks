@@ -1,6 +1,7 @@
 #include <iostream>
 #include <fstream>
 #include <iomanip>
+#include <cctype>
 #include <stdint.h>
 #include <string.h>
 #include "tcan.hpp"
@@ -41,6 +42,14 @@ int main(int argc, char* argv[0])
       {
          cout << " " << setw(2) << setfill('0') << hex << (unsigned)msg.data[i]
               << dec << setfill(' ');
+      }
+      cout << string(3*(9-msg.header.length),' ');
+      for (unsigned i = 0; i < msg.header.length; i++)
+      {
+         if (isprint(msg.data[i]))
+            cout << msg.data[i];
+         else
+            cout << '.';
       }
       cout << endl;
       inp.read((char*)&msg, sizeof(msg));
