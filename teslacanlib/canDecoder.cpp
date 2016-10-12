@@ -11,6 +11,7 @@
 #include "TeslaCAN0382.hpp"
 #include "TeslaCAN03d2.hpp"
 #include "TeslaCAN0562.hpp"
+#include "TeslaCAN06f2.hpp"
 
 namespace canhacks
 {
@@ -31,6 +32,7 @@ namespace canhacks
          case 0x0382: rv = new TeslaCAN0382();    rv->decode(msg); return rv;
          case 0x03d2: rv = new TeslaCAN03d2();    rv->decode(msg); return rv;
          case 0x0562: rv = new TeslaCAN0562();    rv->decode(msg); return rv;
+         case 0x06f2: rv = new TeslaCAN06f2();    rv->decode(msg); return rv;
          case 0x0145:
          case 0x01d4:
          case 0x02e5:
