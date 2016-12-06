@@ -11,6 +11,7 @@ using namespace std;
 int main(int argc, char* argv[0])
 {
    canhacks::tCAN msg;
+   uint32_t timeMS;
       /* This was to verify the consistency of the data structure between
        * Arduino and the x86 g++ compiler.
        printf("&msg=%x size=%d offset.id=%d offset_header=%d\n",
@@ -32,6 +33,7 @@ int main(int argc, char* argv[0])
       return 1;
    }
 
+   inp.read((char*)&timeMS, sizeof(timeMS));
    inp.read((char*)&msg, sizeof(msg));
    while (inp)
    {
@@ -52,6 +54,7 @@ int main(int argc, char* argv[0])
             cout << '.';
       }
       cout << endl;
+      inp.read((char*)&timeMS, sizeof(timeMS));
       inp.read((char*)&msg, sizeof(msg));
    }
    return 0;

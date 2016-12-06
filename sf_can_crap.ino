@@ -120,12 +120,28 @@ uint8_t message_rx(tCAN *message)
 /// Get a message from the CAN bus and store it on the SD card.
 void xfer_can2sd()
 {
+   unsigned long time_ms;
    while (message_rx(&msg))
    {
+      time_ms = millis();
       digitalWrite(LED_OPEN, ledOn);
       ledOn = !ledOn;
-      dataFile.write((const uint8_t *)&msg, sizeof(msg));
-      dataFile.flush();
+/* only write battery messages if uncommented
+      switch (msg.id)
+      {
+         case 0x102:
+         case 0x302:
+         case 0x6f2:
+         */
+            dataFile.write((const uint8_t *)&time_ms, sizeof(time_ms));
+            dataFile.write((const uint8_t *)&msg, sizeof(msg));
+            dataFile.flush();
+/*
+            break;
+         default:
+            break;
+      }
+      */
    }
 }
 

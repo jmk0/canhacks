@@ -12,6 +12,7 @@ using namespace std;
 int main(int argc, char* argv[0])
 {
    canhacks::tCAN msg;
+   uint32_t timeMS;
    typedef list<canhacks::tCAN> MsgList;
    map<unsigned, MsgList> msgColl;
    map<unsigned, MsgList>::iterator mci;
@@ -30,10 +31,12 @@ int main(int argc, char* argv[0])
       return 1;
    }
 
+   inp.read((char*)&timeMS, sizeof(timeMS));
    inp.read((char*)&msg, sizeof(msg));
    while (inp)
    {
       msgColl[msg.id].push_back(msg);
+      inp.read((char*)&timeMS, sizeof(timeMS));
       inp.read((char*)&msg, sizeof(msg));
    }
 

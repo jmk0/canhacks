@@ -51,6 +51,7 @@ void process(canhacks::tCAN& msg)
 int main(int argc, char* argv[0])
 {
    canhacks::tCAN msg;
+   uint32_t timeMS;
 
    if (argc != 2)
    {
@@ -64,10 +65,13 @@ int main(int argc, char* argv[0])
       return 1;
    }
 
+   inp.read((char*)&timeMS, sizeof(timeMS));
    inp.read((char*)&msg, sizeof(msg));
    while (inp)
    {
+      cout << "time " << timeMS << " ms" << endl;
       process(msg);
+      inp.read((char*)&timeMS, sizeof(timeMS));
       inp.read((char*)&msg, sizeof(msg));
    }
 
