@@ -36,7 +36,14 @@ namespace canhacks
 
       double scale = .000305;
       if (index >= 24)
+      {
          scale = .0122;
+         volts = false;
+      }
+      else
+      {
+         volts = true;
+      }
 
       d1 = scale * (msg.data[1] | ( (msg.data[2] & 0x3F) << 8));
       d2 = scale * ( (msg.data[2] >> 6) |
