@@ -20,7 +20,7 @@ namespace canhacks
       virtual void decode(tCAN& msg);
          /** Return a string containing a human-readable
           * representation of the message. */
-      virtual std::string dump();
+      virtual std::string dump(bool verbose = true);
 
          /// Identifier for the battery pack
       uint8_t index;

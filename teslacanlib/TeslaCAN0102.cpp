@@ -34,7 +34,7 @@ namespace canhacks
 
 
    std::string TeslaCAN0102 ::
-   dump()
+   dump(bool verbose)
    {
       std::ostringstream s;
       s << "Battery pack: " << batteryPackVoltage << "V "

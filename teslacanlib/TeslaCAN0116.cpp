@@ -27,15 +27,24 @@ namespace canhacks
 
 
    std::string TeslaCAN0116 ::
-   dump()
+   dump(bool verbose)
    {
       std::ostringstream s;
-      s << std::fixed << std::setprecision(2)
-        << "Torque estimate: " << torqueEst << " N*m ("
-        << (torqueEst * 0.737562149277) << " ft*lb)" << std::endl
-        << "Vehicle speed: " << speed << " MPH" << std::endl
-        << "Gear request: " << gearRequest << std::endl
-        << "Gear: " << gear << std::endl;
+      if (verbose)
+      {
+         s << std::fixed << std::setprecision(2)
+           << "Torque estimate: " << torqueEst << " N*m ("
+           << (torqueEst * 0.737562149277) << " ft*lb)" << std::endl
+           << "Vehicle speed: " << speed << " MPH" << std::endl
+           << "Gear request: " << gearRequest << std::endl
+           << "Gear: " << gear << std::endl;
+      }
+      else
+      {
+         s << std::fixed << std::setprecision(2)
+           << torqueEst << " " << (torqueEst * 0.737562149277) << " "
+           << speed << " " << gearRequest << " " << gear;
+      }
       return s.str();
    }
 }

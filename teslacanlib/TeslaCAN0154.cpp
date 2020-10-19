@@ -25,7 +25,7 @@ namespace canhacks
 
 
    std::string TeslaCAN0154 ::
-   dump()
+   dump(bool verbose)
    {
       std::ostringstream s;
       s << std::setprecision(2) << std::fixed

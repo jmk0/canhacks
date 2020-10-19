@@ -38,8 +38,9 @@ use strict;
 # plot for [IDX=0:83] 'battery.volts.dat' i IDX u 1:4 w lines notitle
 # set y2tics
 # set ylabel "Volts"
-# set y2label "%"
-# plot for [IDX=0:83] 'battery.volts.dat' i IDX u 1:4 w lines axes x1y1 notitle, 'soc.dat' u 1:4 w lines axes x1y2 notitle
+# set y2label "soc%"
+# set xlabel "minutes"
+# plot for [IDX=0:83] 'battery.volts.dat' i IDX u ($1/60000):4 w lines axes x1y1 notitle, 'soc.dat' u ($1/60000):4 w lines axes x1y2 notitle
 
 my $recnum = 0;
 my $index6f2 = 0;

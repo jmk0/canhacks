@@ -37,7 +37,7 @@ namespace canhacks
 
 
    std::string TeslaCAN0256 ::
-   dump()
+   dump(bool verbose)
    {
       using namespace std;
       ostringstream s;

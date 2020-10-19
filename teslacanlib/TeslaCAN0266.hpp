@@ -20,7 +20,7 @@ namespace canhacks
       virtual void decode(tCAN& msg);
          /** Return a string containing a human-readable
           * representation of the message. */
-      virtual std::string dump();
+      virtual std::string dump(bool verbose = true);
 
       double inverter12V;     ///< 12V inverter measured Voltage.
       uint16_t dissipation;   ///< power dissipation in Watts.

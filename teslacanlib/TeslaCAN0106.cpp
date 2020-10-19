@@ -22,7 +22,7 @@ namespace canhacks
 
 
    std::string TeslaCAN0106 ::
-   dump()
+   dump(bool verbose)
    {
       std::ostringstream s;
       s << "Rear drive motor RPM: " << motorRPM << std::endl

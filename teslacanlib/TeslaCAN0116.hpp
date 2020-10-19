@@ -29,7 +29,7 @@ namespace canhacks
       virtual void decode(tCAN& msg);
          /** Return a string containing a human-readable
           * representation of the message. */
-      virtual std::string dump();
+      virtual std::string dump(bool verbose = true);
 
       double torqueEst; ///< Torque estimate in N*m.
       double speed;     ///< In MPH.
